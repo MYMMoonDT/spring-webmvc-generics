@@ -8,38 +8,18 @@ import org.springframework.web.bind.ServletRequestDataBinder;
 import org.springframework.web.servlet.ModelAndView;
 
 /**
- * {@see org.springframework.web.servlet.mvc.AbstractCommandController}.
+ * {@see org.springframework.web.servlet.mvc.BaseCommandController}.
  *
  * @param <T>
  */
-public abstract class AbstractCommandController<T>
-    extends org.springframework.web.servlet.mvc.AbstractCommandController {
-    
+public abstract class BaseCommandController<T>
+    extends org.springframework.web.servlet.mvc.BaseCommandController {
+
     /**
      * {@inheritDoc}
      */
-    @Override
-    @SuppressWarnings("unchecked")
-    protected final ModelAndView handle(
-        HttpServletRequest request, HttpServletResponse response, 
-        Object command, BindException errors)
-        throws Exception {
-        return handle((T)command, errors, request, response);
-    }
-
-    /**
-     * Generic version of 
-     * {@link #handle(HttpServletRequest, HttpServletResponse, Object, BindException)}.
-     * @param command the command object
-     * @param errors the errors
-     * @param request the request
-     * @param response the response
-     * @return the model and view
-     * @throws Exception on error.
-     */
-    protected abstract ModelAndView handle(
-        T command, BindException errors,
-        HttpServletRequest request, HttpServletResponse response)
+    protected abstract ModelAndView handleRequestInternal(
+        HttpServletRequest request, HttpServletResponse response) 
         throws Exception;
     
     /**
