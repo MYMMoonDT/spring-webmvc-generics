@@ -177,13 +177,13 @@
 		+-->
 	<scm>
 		<connection>
-			scm:svn:http://spring-webmvc-generics.googlecode.com/svn/trunk
+			scm:svn:http://spring-webmvc-generics.googlecode.com/svn/trunk/spring-webmvc-generics
 		</connection>
 		<developerConnection>
-			scm:svn:https://spring-webmvc-generics.googlecode.com/svn/trunk
+			scm:svn:https://spring-webmvc-generics.googlecode.com/svn/trunk/spring-webmvc-generics
 		</developerConnection>
 		<url>
-			http://spring-webmvc-generics.googlecode.com/svn/trunk
+			http://spring-webmvc-generics.googlecode.com/svn/trunk/spring-webmvc-generics
 		</url>
 	</scm>
 
