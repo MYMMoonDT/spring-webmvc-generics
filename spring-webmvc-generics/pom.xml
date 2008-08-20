@@ -160,15 +160,6 @@
 			</build>
 		</profile>
 	</profiles>
-	
-	<!--
-	 | scm configuration
-	 +-->
-	<scm>
-        <connection>scm:svn:http://megatron.corp.nesting.com/svn/trunk/eng/nesting-java</connection>
-        <developerConnection>scm:svn:http://megatron.corp.nesting.com/svn/trunk/eng/nesting-java</developerConnection>
-        <url>http://megatron.corp.nesting.com/svn/trunk/eng/nesting-java</url>
-	</scm>
 
 	<!--
 	 | continuous integration configuration
