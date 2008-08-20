@@ -4,19 +4,38 @@ import java.util.Locale;
 
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.core.Ordered;
 import org.springframework.web.servlet.View;
 import org.springframework.web.servlet.ViewResolver;
 
 /**
- * A {@link ViewResolver} that resolves 
- * {@link TokenReplacementRedirectView}s.
+ * A {@link ViewResolver} that resolves {@link TokenReplacementRedirectView}s.
+ * 
+ * The folowing sample configuration would allow for views
+ * prefixed with "sendRedirect:" to be resolved to
+ * {@link TokenReplacementRedirectView}s using an HTTP
+ * status code of 303 and ensuring that the url being
+ * redirected to is context relative (if it starts with "/").
+ * <code>
+ *   &gt;!-- redirector --&lt;
+ *   &gt;bean id="tokenReplacementRedirectViewResolver" 
+ *       class="org.springframework.web.servlet.generics.view.TokenReplacementRedirectViewResolver"&lt;
+ *       &gt;property name="order"              value="1" /&lt;
+ *       &gt;property name="prefix"             value="sendRedirect:" /&lt;
+ *       &gt;property name="httpStatusCode"     value="303" /&lt;
+ *       &gt;property name="contextRelative"    value="true" /&lt;
+ *   &gt;/bean&lt;
+ * </code>
+ * 
  */
 public class TokenReplacementRedirectViewResolver 
-    implements ViewResolver {
+    implements ViewResolver,
+    Ordered {
 
     private String prefix           = "sendRedirect:";
     private int httpStatusCode      = HttpServletResponse.SC_SEE_OTHER;
     private boolean contextRelative = true;
+    private int order               = 0;
     
     /**
      * {@inheritDoc}
@@ -74,4 +93,18 @@ public class TokenReplacementRedirectViewResolver
         this.contextRelative = contextRelative;
     }
 
+    /**
+     * @return the order
+     */
+    public int getOrder() {
+        return order;
+    }
+
+    /**
+     * @param order the order to set
+     */
+    public void setOrder(int order) {
+        this.order = order;
+    }
+    
 }

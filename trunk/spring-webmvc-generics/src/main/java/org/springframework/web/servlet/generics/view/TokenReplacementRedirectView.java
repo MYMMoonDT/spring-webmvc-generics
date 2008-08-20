@@ -60,7 +60,7 @@ public class TokenReplacementRedirectView
     /**
      * Sets the HTTP status code to use for the redirect.  The
      * default is {@link HttpServletResponse#SC_SEE_OTHER}
-     * (300).  One should be careful when setting this because
+     * (303).  One should be careful when setting this because
      * not all HTTP status codes are for redirecting.
      * @param httpStatusCode the httpStatusCode to set
      */

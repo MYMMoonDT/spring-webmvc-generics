@@ -95,6 +95,7 @@
 				<!-- build plugins -->
 				<plugins>
 
+					<!-- compiler plugin -->
 					<plugin>
 						<groupId>org.apache.maven.plugins</groupId>
 						<artifactId>maven-compiler-plugin</artifactId>
@@ -102,6 +103,20 @@
 							<source>1.6</source>
 							<target>1.6</target>
 						</configuration>
+					</plugin>
+					
+					<!-- deploys the sources too -->
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-source-plugin</artifactId>
+						<executions>
+							<execution>
+								<goals>
+									<goal>jar</goal>
+									<goal>test-jar</goal>
+								</goals>
+							</execution>
+						</executions>
 					</plugin>
 
 					<!-- checkstyle build plugin -->

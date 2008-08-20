@@ -13,13 +13,39 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.bind.ServletRequestDataBinder;
 
 /**
- * {@see org.springframework.web.servlet.mvc.AbstractFormController}.
- *
+ * Generic implementation of spring's
+ * {@link org.springframework.web.servlet.mvc.AbstractFormController}
+ * 
+ * Features added to this controller not present in the one
+ * provided by the spring framework are:
+ * <ul>
+ *  <li>formView configuration parameter</li>
+ *  <li>successView configuration parameter<li>
+ *  <li>
+ *      {@link #processFormSubmission(Object, BindException, HttpServletRequest, HttpServletResponse)}
+ *      is only called when there are no errors (ie: validation).
+ *      In the case of errors {@link #showForm(HttpServletRequest, HttpServletResponse, BindException, Object)}
+ *      is called.
+ *  <li>
+ *  <li>
+ *      {@link #showForm(HttpServletRequest, HttpServletResponse, BindException, Object)}
+ *      provides an argument for the command argument.
+ *  </li>
+ *  <li>
+ *      {@link #referenceData(Object, Errors, HttpServletRequest, Map)} is void and
+ *      is passed a model {@link Map} rather than returning one.
+ *  </li>
+ * </ul>
+ * 
+ * @see org.springframework.web.servlet.mvc.AbstractFormController
  * @param <T>
  */
 public abstract class AbstractFormController<T> 
     extends org.springframework.web.servlet.mvc.AbstractFormController {
 
+    private String formView;
+    private String successView;
+    
     /**
      * {@inheritDoc}
      */
@@ -130,12 +156,16 @@ public abstract class AbstractFormController<T>
         HttpServletRequest request, HttpServletResponse response, 
         Object command, BindException errors)
         throws Exception {
+        if (errors.hasErrors()) {
+            return showForm(request, response, errors);
+        }
         return processFormSubmission((T)command, errors, request, response);
     }
 
     /**
      * Generic version of
      * {@link #processFormSubmission(HttpServletRequest, HttpServletResponse, Object, BindException)}.
+     * This method is only called if {@link BindException#hasErrors()} returns false.
      * @param command the command object
      * @param errors errors
      * @param request the request
@@ -186,7 +216,7 @@ public abstract class AbstractFormController<T>
      */
     @Override
     @SuppressWarnings("unchecked")
-    protected ModelAndView showForm(
+    protected final ModelAndView showForm(
         HttpServletRequest request, HttpServletResponse response, BindException errors)
         throws Exception {
         T command = (errors!=null && errors.getTarget()!=null) 
@@ -197,6 +227,10 @@ public abstract class AbstractFormController<T>
     /**
      * Generic version of
      * {@link #showForm(HttpServletRequest, HttpServletResponse, BindException)}.
+     * The default implementation of this method returns
+     * a ModelAndView with the view name congfigured via {@link #setFormView(String)}
+     * and a model containing the command object and model data
+     * from the {@link BindException} parameter.
      * @param request the request
      * @param response the response
      * @param errors the errors
@@ -205,10 +239,12 @@ public abstract class AbstractFormController<T>
      * @throws Exception on error
      */
     @SuppressWarnings("unchecked")
-    protected abstract ModelAndView showForm(
+    protected ModelAndView showForm(
         HttpServletRequest request, HttpServletResponse response, 
         BindException errors, T command)
-        throws Exception;
+        throws Exception {
+        return super.showForm(request, errors, this.formView);
+    }
 
     /**
      * {@inheritDoc}
@@ -350,6 +386,36 @@ public abstract class AbstractFormController<T>
     protected boolean suppressValidation(
         T command, HttpServletRequest request) {
         return super.suppressValidation(request, command);
+    }
+
+    /**
+     * @return the formView
+     */
+    public String getFormView() {
+        return formView;
+    }
+
+    /**
+     * Sets the view name used for the form.
+     * @param formView the formView to set
+     */
+    public void setFormView(String formView) {
+        this.formView = formView;
+    }
+
+    /**
+     * @return the successView
+     */
+    public String getSuccessView() {
+        return successView;
+    }
+
+    /**
+     * Sets the view name used for success.
+     * @param successView the successView to set
+     */
+    public void setSuccessView(String successView) {
+        this.successView = successView;
     }
 
 }
