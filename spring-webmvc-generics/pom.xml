@@ -160,6 +160,49 @@
 			</build>
 		</profile>
 	</profiles>
+	
+	<!--
+	 | scm configuration
+	 +-->
+	<scm>
+        <connection>scm:svn:http://megatron.corp.nesting.com/svn/trunk/eng/nesting-java</connection>
+        <developerConnection>scm:svn:http://megatron.corp.nesting.com/svn/trunk/eng/nesting-java</developerConnection>
+        <url>http://megatron.corp.nesting.com/svn/trunk/eng/nesting-java</url>
+	</scm>
+
+	<!--
+	 | continuous integration configuration
+	 +-->
+	<ciManagement>
+		<system>continuum</system>
+		<url>http://bonecrusher.corp.nesting.com/continuum</url>
+		<notifiers>
+			<notifier>
+				<type>mail</type>
+				<configuration>
+					<address>build@nesting.com</address>
+					<address>build@nesting.com</address>
+				</configuration>
+			</notifier>
+		</notifiers>
+	</ciManagement>
+
+	<!--
+	 | distribution (deployment) configuration
+	 +-->
+	<distributionManagement>
+		<repository>
+			<id>bonecrusher-ssh-repository</id>
+			<url>scpexe://bonecrusher.corp.nesting.com/home/maven2/htdocs/maven2</url>
+			<uniqueVersion>false</uniqueVersion>
+			<layout>default</layout>
+		</repository>
+		<site>
+			<id>site-server</id>
+			<name>Nesting site Server</name>
+			<url>scpexe://bonecrusher.corp.nesting.com/home/maven2/htdocs/maven-site</url>
+		</site>
+	</distributionManagement>
 
 	<!--
 		| Developers on the project
@@ -169,6 +212,11 @@
 			<email>brian.dilley@gmail.com</email>
 			<id>brian.dilley</id>
 			<name>Brian Dilley</name>
+		</developer>
+		<developer>
+			<email>jwormy@gmail.com</email>
+			<id>jwormy</id>
+			<name>Jeremy Arnold</name>
 		</developer>
 	</developers>
 
