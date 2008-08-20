@@ -1,4 +1,4 @@
-package org.springframework.web.servlet.view.generics;
+package org.springframework.web.servlet.generics.view;
 
 import java.util.Locale;
 

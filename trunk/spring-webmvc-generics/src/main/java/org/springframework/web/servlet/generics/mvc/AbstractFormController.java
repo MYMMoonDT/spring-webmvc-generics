@@ -1,4 +1,4 @@
-package org.springframework.web.servlet.mvc.generics;
+package org.springframework.web.servlet.generics.mvc;
 
 import java.util.HashMap;
 import java.util.Map;

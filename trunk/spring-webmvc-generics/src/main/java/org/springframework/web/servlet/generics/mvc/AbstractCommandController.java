@@ -1,4 +1,4 @@
-package org.springframework.web.servlet.mvc.generics;
+package org.springframework.web.servlet.generics.mvc;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

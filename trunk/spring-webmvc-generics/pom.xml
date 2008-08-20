@@ -6,7 +6,7 @@
 		| Basic project information
 		+-->
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>org.springframework.web.servlet.mvc.generics</groupId>
+	<groupId>org.springframework.web.servlet.generics</groupId>
 	<version>1.0-SNAPSHOT</version>
 	<artifactId>spring-webmvc-generics</artifactId>
 	<name>Spring Web MVC Generics</name>
