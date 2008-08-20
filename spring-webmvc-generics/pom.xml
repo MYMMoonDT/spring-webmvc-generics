@@ -184,7 +184,7 @@
 	<distributionManagement>
 		<repository>
 			<id>bonecrusher-ssh-repository</id>
-			<url>scpexe://bonecrusher.corp.nesting.com/home/maven2/htdocs/maven2</url>
+			<url>scpexe://bonecrusher.corp.nesting.com/home/maven2/htdocs/maven2-opensource</url>
 			<uniqueVersion>false</uniqueVersion>
 			<layout>default</layout>
 		</repository>
@@ -215,15 +215,9 @@
 		| scm configuration
 		+-->
 	<scm>
-		<connection>
-			scm:svn:http://spring-webmvc-generics.googlecode.com/svn/trunk/spring-webmvc-generics
-		</connection>
-		<developerConnection>
-			scm:svn:https://spring-webmvc-generics.googlecode.com/svn/trunk/spring-webmvc-generics
-		</developerConnection>
-		<url>
-			http://spring-webmvc-generics.googlecode.com/svn/trunk/spring-webmvc-generics
-		</url>
+		<connection>scm:svn:http://spring-webmvc-generics.googlecode.com/svn/trunk/spring-webmvc-generics</connection>
+		<developerConnection>scm:svn:https://spring-webmvc-generics.googlecode.com/svn/trunk/spring-webmvc-generics</developerConnection>
+		<url>http://spring-webmvc-generics.googlecode.com/svn/trunk/spring-webmvc-generics</url>
 	</scm>
 
 	<!--
