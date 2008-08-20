@@ -272,7 +272,7 @@
 								<![CDATA[
 									<?xml version="1.0" encoding="UTF-8"?>
 									<fileset-config file-format-version="1.2.0" simple-config="false">
-									    <fileset name="sources" enabled="true" check-config-name="Exhaustive Checks" local="false">
+									    <fileset name="sources" enabled="true" check-config-name="Spring WebMVC Generics Exhaustive Checks" local="false">
 									        <file-match-pattern match-pattern="target[\\/]*" include-pattern="false" />
 									        <file-match-pattern match-pattern="src[\\/]main[\\/]java[\\/]*" include-pattern="true" />
 									        <file-match-pattern match-pattern="src[\\/]test[\\/]java[\\/]*" include-pattern="false" />
