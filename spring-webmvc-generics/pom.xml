@@ -191,7 +191,7 @@
 		<site>
 			<id>site-server</id>
 			<name>Nesting site Server</name>
-			<url>scpexe://bonecrusher.corp.nesting.com/home/maven2/htdocs/maven-site</url>
+			<url>scpexe://bonecrusher.corp.nesting.com/home/maven2/htdocs/maven-site/spring-webmvc-generics</url>
 		</site>
 	</distributionManagement>
 
