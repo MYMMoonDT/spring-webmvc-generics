@@ -23,13 +23,13 @@ import org.springframework.web.bind.ServletRequestDataBinder;
  *  provided by the spring framework are:
  *  <ul>
  *      <li>formView configuration parameter</li>
- *      <li>successView configuration parameter<li>
+ *      <li>successView configuration parameter</li>
  *      <li>
  *          {@link #processFormSubmission(Object, BindException, HttpServletRequest, HttpServletResponse)}
  *          is only called when there are no errors (ie: validation).
  *          In the case of errors {@link #showForm(HttpServletRequest, HttpServletResponse, BindException, Object)}
  *          is called.
- *      <li>
+ *      </li>
  *      <li>
  *          {@link #showForm(HttpServletRequest, HttpServletResponse, BindException, Object)}
  *          provides an argument for the command argument.

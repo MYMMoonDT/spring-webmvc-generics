@@ -21,13 +21,13 @@ import org.springframework.web.servlet.ModelAndView;
  *  provided by the spring framework are:
  *  <ul>
  *      <li>defaultView configuration parameter</li>
- *      <li>errorView configuration parameter<li>
+ *      <li>errorView configuration parameter</li>
  *      <li>
  *          {@link #handle(Object, BindException, HttpServletRequest, HttpServletResponse)}
  *          is only called when there are no errors (ie: validation).
  *          In the case of errors {@link #handleError(Object, BindException, HttpServletRequest, HttpServletResponse)}
  *          is called.
- *      <li>
+ *      </li>
  *  </ul>
  * </p>
  *
