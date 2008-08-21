@@ -9,14 +9,16 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.web.servlet.view.AbstractUrlBasedView;
 
 /**
- * A view that does token replacement on a url
- * and performs a redirect to said url. This view
- * is useful in conjuction with controllers that
- * want to perform POST-REDIRECT-GET functionality.
- * URLS are preprocessed and string token replacement
- * is performed on the url using the model keys as
- * tokens and replacing the tokens with the model
- * value for the given key.
+ * <p>
+ *  A view that does token replacement on a url
+ *  and performs a redirect to said url. This view
+ *  is useful in conjuction with controllers that
+ *  want to perform POST-REDIRECT-GET functionality.
+ *  URLS are preprocessed and string token replacement
+ *  is performed on the url using the model keys as
+ *  tokens and replacing the tokens with the model
+ *  value for the given key.
+ * </p>
  */
 public class TokenReplacementRedirectView 
     extends AbstractUrlBasedView {

@@ -13,29 +13,33 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.bind.ServletRequestDataBinder;
 
 /**
- * Generic implementation of spring's
- * {@link org.springframework.web.servlet.mvc.AbstractFormController}
+ * <p>
+ *  Generic implementation of spring's
+ *  {@link org.springframework.web.servlet.mvc.AbstractFormController}.
+ * </p>
  * 
- * Features added to this controller not present in the one
- * provided by the spring framework are:
- * <ul>
- *  <li>formView configuration parameter</li>
- *  <li>successView configuration parameter<li>
- *  <li>
- *      {@link #processFormSubmission(Object, BindException, HttpServletRequest, HttpServletResponse)}
- *      is only called when there are no errors (ie: validation).
- *      In the case of errors {@link #showForm(HttpServletRequest, HttpServletResponse, BindException, Object)}
- *      is called.
- *  <li>
- *  <li>
- *      {@link #showForm(HttpServletRequest, HttpServletResponse, BindException, Object)}
- *      provides an argument for the command argument.
- *  </li>
- *  <li>
- *      {@link #referenceData(Object, Errors, HttpServletRequest, Map)} is void and
- *      is passed a model {@link Map} rather than returning one.
- *  </li>
- * </ul>
+ * <p>
+ *  Features added to this controller not present in the one
+ *  provided by the spring framework are:
+ *  <ul>
+ *      <li>formView configuration parameter</li>
+ *      <li>successView configuration parameter<li>
+ *      <li>
+ *          {@link #processFormSubmission(Object, BindException, HttpServletRequest, HttpServletResponse)}
+ *          is only called when there are no errors (ie: validation).
+ *          In the case of errors {@link #showForm(HttpServletRequest, HttpServletResponse, BindException, Object)}
+ *          is called.
+ *      <li>
+ *      <li>
+ *          {@link #showForm(HttpServletRequest, HttpServletResponse, BindException, Object)}
+ *          provides an argument for the command argument.
+ *      </li>
+ *      <li>
+ *          {@link #referenceData(Object, Errors, HttpServletRequest, Map)} is void and
+ *          is passed a model {@link Map} rather than returning one.
+ *      </li>
+ *  </ul>
+ * </p>
  * 
  * @see org.springframework.web.servlet.mvc.AbstractFormController
  * @param <T>
@@ -165,7 +169,9 @@ public abstract class AbstractFormController<T>
     /**
      * Generic version of
      * {@link #processFormSubmission(HttpServletRequest, HttpServletResponse, Object, BindException)}.
-     * This method is only called if {@link BindException#hasErrors()} returns false.
+     * This method is only called if {@link BindException#hasErrors()} returns false, otherwise
+     * {@link #showForm(HttpServletRequest, HttpServletResponse, BindException, Object)}
+     * is called.
      * @param command the command object
      * @param errors errors
      * @param request the request
