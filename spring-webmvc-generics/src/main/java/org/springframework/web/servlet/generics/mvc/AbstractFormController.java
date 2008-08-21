@@ -80,7 +80,6 @@ public abstract class AbstractFormController<T>
      * {@inheritDoc}
      */
     @Override
-    @SuppressWarnings("unchecked")
     protected final Object formBackingObject(HttpServletRequest request)
         throws Exception {
         return (T)getFormBackingObject(request);
@@ -119,7 +118,6 @@ public abstract class AbstractFormController<T>
      * @param errors errors
      * @throws Exception on error
      */
-    @SuppressWarnings("unchecked")
     protected void onBindOnNewForm(
         T command, HttpServletRequest request, BindException errors) 
         throws Exception {
@@ -144,7 +142,6 @@ public abstract class AbstractFormController<T>
      * @param request the request
      * @throws Exception on error
      */
-    @SuppressWarnings("unchecked")
     protected void onBindOnNewForm(
         T command, HttpServletRequest request)
         throws Exception {
@@ -244,7 +241,6 @@ public abstract class AbstractFormController<T>
      * @return the ModelAndView
      * @throws Exception on error
      */
-    @SuppressWarnings("unchecked")
     protected ModelAndView showForm(
         HttpServletRequest request, HttpServletResponse response, 
         BindException errors, T command)

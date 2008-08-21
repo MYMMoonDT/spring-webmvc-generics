@@ -66,7 +66,6 @@ public abstract class AbstractWizardFormController<T>
      * {@inheritDoc}
      */
     @Override
-    @SuppressWarnings("unchecked")
     protected final int getTargetPage(
         HttpServletRequest request, Object command,
         Errors errors, int currentPage) {
@@ -362,7 +361,6 @@ public abstract class AbstractWizardFormController<T>
      * {@inheritDoc}
      */
     @Override
-    @SuppressWarnings("unchecked")
     protected final Object formBackingObject(HttpServletRequest request)
         throws Exception {
         return getFormBackingObject(request);
@@ -401,7 +399,6 @@ public abstract class AbstractWizardFormController<T>
      * @param errors errors
      * @throws Exception on error
      */
-    @SuppressWarnings("unchecked")
     protected void onBindOnNewForm(
         T command, HttpServletRequest request, BindException errors) 
         throws Exception {
@@ -426,7 +423,6 @@ public abstract class AbstractWizardFormController<T>
      * @param request the request
      * @throws Exception on error
      */
-    @SuppressWarnings("unchecked")
     protected void onBindOnNewForm(
         T command, HttpServletRequest request)
         throws Exception {
@@ -456,7 +452,6 @@ public abstract class AbstractWizardFormController<T>
      * @return the ModelAndView
      * @throws Exception on error
      */
-    @SuppressWarnings("unchecked")
     protected ModelAndView showForm(
         HttpServletRequest request, HttpServletResponse response, 
         BindException errors, T command)
