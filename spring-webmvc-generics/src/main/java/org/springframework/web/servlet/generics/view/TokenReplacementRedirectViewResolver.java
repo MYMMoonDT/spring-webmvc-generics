@@ -16,16 +16,18 @@ import org.springframework.web.servlet.ViewResolver;
  * {@link TokenReplacementRedirectView}s using an HTTP
  * status code of 303 and ensuring that the url being
  * redirected to is context relative (if it starts with "/").
- * <code>
- *   &gt;!-- redirector --&lt;
- *   &gt;bean id="tokenReplacementRedirectViewResolver" 
- *       class="org.springframework.web.servlet.generics.view.TokenReplacementRedirectViewResolver"&lt;
- *       &gt;property name="order"              value="1" /&lt;
- *       &gt;property name="prefix"             value="sendRedirect:" /&lt;
- *       &gt;property name="httpStatusCode"     value="303" /&lt;
- *       &gt;property name="contextRelative"    value="true" /&lt;
- *   &gt;/bean&lt;
- * </code>
+ * <pre>
+ *  <code>
+ *   &lt;!-- redirector --&gt;
+ *   &lt;bean id="tokenReplacementRedirectViewResolver" 
+ *       class="org.springframework.web.servlet.generics.view.TokenReplacementRedirectViewResolver"&gt;
+ *       &lt;property name="order"              value="1" /&gt;
+ *       &lt;property name="prefix"             value="sendRedirect:" /&gt;
+ *       &lt;property name="httpStatusCode"     value="303" /&gt;
+ *       &lt;property name="contextRelative"    value="true" /&gt;
+ *   &lt;/bean&gt;
+ *  </code>
+ * </pre>
  * 
  */
 public class TokenReplacementRedirectViewResolver 
