@@ -12,7 +12,10 @@ import org.springframework.web.bind.ServletRequestDataBinder;
 import org.springframework.web.servlet.ModelAndView;
 
 /**
- * {@see org.springframework.web.servlet.mvc.AbstractWizardFormController}.
+ * <p>
+ *  Generic implementation of spring's
+ *  {@link org.springframework.web.servlet.mvc.AbstractWizardFormController}.
+ * </p>
  *
  * @param <T>
  */

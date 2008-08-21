@@ -9,25 +9,29 @@ import org.springframework.web.servlet.View;
 import org.springframework.web.servlet.ViewResolver;
 
 /**
- * A {@link ViewResolver} that resolves {@link TokenReplacementRedirectView}s.
+ * <p>
+ *  A {@link ViewResolver} that resolves {@link TokenReplacementRedirectView}s.
+ * </p>
  * 
- * The folowing sample configuration would allow for views
- * prefixed with "sendRedirect:" to be resolved to
- * {@link TokenReplacementRedirectView}s using an HTTP
- * status code of 303 and ensuring that the url being
- * redirected to is context relative (if it starts with "/").
- * <pre>
- *  <code>
- *   &lt;!-- redirector --&gt;
- *   &lt;bean id="tokenReplacementRedirectViewResolver" 
- *       class="org.springframework.web.servlet.generics.view.TokenReplacementRedirectViewResolver"&gt;
- *       &lt;property name="order"              value="1" /&gt;
- *       &lt;property name="prefix"             value="sendRedirect:" /&gt;
- *       &lt;property name="httpStatusCode"     value="303" /&gt;
- *       &lt;property name="contextRelative"    value="true" /&gt;
- *   &lt;/bean&gt;
- *  </code>
- * </pre>
+ * <p>
+ *  The folowing sample configuration would allow for views
+ *  prefixed with "sendRedirect:" to be resolved to
+ *  {@link TokenReplacementRedirectView}s using an HTTP
+ *  status code of 303 and ensuring that the url being
+ *  redirected to is context relative (if it starts with "/").
+ *  <pre>
+ *      <code>
+ *      &lt;!-- redirector --&gt;
+ *      &lt;bean id="tokenReplacementRedirectViewResolver" 
+ *          class="org.springframework.web.servlet.generics.view.TokenReplacementRedirectViewResolver"&gt;
+ *          &lt;property name="order"              value="1" /&gt;
+ *          &lt;property name="prefix"             value="sendRedirect:" /&gt;
+ *          &lt;property name="httpStatusCode"     value="303" /&gt;
+ *          &lt;property name="contextRelative"    value="true" /&gt;
+ *      &lt;/bean&gt;
+ *      </code>
+ *  </pre>
+ * </p>
  * 
  */
 public class TokenReplacementRedirectViewResolver 
