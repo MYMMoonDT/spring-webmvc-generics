@@ -13,11 +13,20 @@ import org.springframework.web.servlet.ModelAndView;
  *  {@link org.springframework.web.servlet.mvc.BaseCommandController}.
  * </p>
  *
+ * <p>
+ *  Features added to this controller not present in the one
+ *  provided by the spring framework are:
+ *  <ul>
+ *      <li>defaultView configuration parameter</li>
+ *  </ul>
+ * </p>
  * @param <T>
  */
 public abstract class BaseCommandController<T>
     extends org.springframework.web.servlet.mvc.BaseCommandController {
 
+    private String defaultView;
+    
     /**
      * {@inheritDoc}
      */
@@ -167,4 +176,18 @@ public abstract class BaseCommandController<T>
         return super.suppressValidation(request, command);
     }
 
+    /**
+     * @return the defaultView
+     */
+    public String getDefaultView() {
+        return defaultView;
+    }
+
+    /**
+     * @param defaultView the defaultView to set
+     */
+    public void setDefaultView(String defaultView) {
+        this.defaultView = defaultView;
+    }
+    
 }
