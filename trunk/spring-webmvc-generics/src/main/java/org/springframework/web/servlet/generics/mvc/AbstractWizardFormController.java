@@ -10,17 +10,32 @@ import org.springframework.validation.BindException;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.ServletRequestDataBinder;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.generics.util.GenericsUtil;
 
 /**
  * <p>
  *  Generic implementation of spring's
  *  {@link org.springframework.web.servlet.mvc.AbstractWizardFormController}.
  * </p>
- *
- * @param <T>
+ * 
+ * <p>
+ *  Features added to this controller not present in the one
+ *  provided by the spring framework are:
+ *  <ul>
+ *      <li>The commandClass is automatically determined and therefore doesn't need to be set</li>
+ *  </ul>
+ * </p>
+ * @param <CMD>
  */
-public abstract class AbstractWizardFormController<T>
+public abstract class AbstractWizardFormController<CMD>
     extends org.springframework.web.servlet.mvc.AbstractWizardFormController {
+    
+    /**
+     * Creates the AbstractWizardFormController.
+     */
+    public AbstractWizardFormController() {
+        super.setCommandClass(GenericsUtil.getCommandClassFromController(this));
+    }
 
     /**
      * {@inheritDoc}
@@ -28,7 +43,7 @@ public abstract class AbstractWizardFormController<T>
     @Override
     @SuppressWarnings("unchecked")
     protected final int getInitialPage(HttpServletRequest request, Object command) {
-        return getInitialPage((T)command, request);
+        return getInitialPage((CMD)command, request);
     }
     
     /**
@@ -38,7 +53,7 @@ public abstract class AbstractWizardFormController<T>
      * @param request the request
      * @return the initial page
      */
-    protected int getInitialPage(T command, HttpServletRequest request) {
+    protected int getInitialPage(CMD command, HttpServletRequest request) {
         return super.getInitialPage(request, command);
     }
 
@@ -48,7 +63,7 @@ public abstract class AbstractWizardFormController<T>
     @Override
     @SuppressWarnings("unchecked")
     protected final int getPageCount(HttpServletRequest request, Object command) {
-        return getPageCount((T)command, request);
+        return getPageCount((CMD)command, request);
     }
     
     /**
@@ -58,7 +73,7 @@ public abstract class AbstractWizardFormController<T>
      * @param request the request
      * @return the page count
      */
-    protected int getPageCount(T command, HttpServletRequest request) {
+    protected int getPageCount(CMD command, HttpServletRequest request) {
         return super.getPageCount(request, command);
     }
 
@@ -82,7 +97,7 @@ public abstract class AbstractWizardFormController<T>
      * @return the target page
      */
     protected int getTargetPage(
-        T command, HttpServletRequest request,
+        CMD command, HttpServletRequest request,
         Errors errors, int currentPage) {
         return super.getTargetPage(request, command, errors, currentPage);
     }
@@ -94,7 +109,7 @@ public abstract class AbstractWizardFormController<T>
     @SuppressWarnings("unchecked")
     protected final String getViewName(
         HttpServletRequest request, Object command, int page) {
-        return getViewName((T)command, request, page);
+        return getViewName((CMD)command, request, page);
     }
     
     /**
@@ -106,7 +121,7 @@ public abstract class AbstractWizardFormController<T>
      * @return the view name
      */
     protected String getViewName(
-        T command, HttpServletRequest request, int page) {
+        CMD command, HttpServletRequest request, int page) {
         return super.getViewName(request, command, page);
     }
 
@@ -119,7 +134,7 @@ public abstract class AbstractWizardFormController<T>
         HttpServletRequest request, Object command, 
         BindException errors, int page) 
         throws Exception {
-        onBindAndValidate((T)command, request, errors, page);
+        onBindAndValidate((CMD)command, request, errors, page);
     }
     
     /**
@@ -132,7 +147,7 @@ public abstract class AbstractWizardFormController<T>
      * @throws Exception on error
      */
     protected void onBindAndValidate(
-        T command, HttpServletRequest request, 
+        CMD command, HttpServletRequest request, 
         BindException errors, int page) 
         throws Exception {
         super.onBindAndValidate(request, command, errors, page);
@@ -147,7 +162,7 @@ public abstract class AbstractWizardFormController<T>
         HttpServletRequest request, Object command,
         Errors errors, int page) 
         throws Exception {
-        postProcessPage((T)command, request, errors, page);
+        postProcessPage((CMD)command, request, errors, page);
     }
     
     /**
@@ -160,7 +175,7 @@ public abstract class AbstractWizardFormController<T>
      * @throws Exception on error
      */
     protected void postProcessPage(
-        T command, HttpServletRequest request,
+        CMD command, HttpServletRequest request,
         Errors errors, int page) 
         throws Exception {
         super.postProcessPage(request, command, errors, page);
@@ -175,7 +190,7 @@ public abstract class AbstractWizardFormController<T>
         HttpServletRequest request, HttpServletResponse response, 
         Object command, BindException errors)
         throws Exception {
-        return processCancel((T)command, errors, request, response);
+        return processCancel((CMD)command, errors, request, response);
     }
     
     /**
@@ -189,7 +204,7 @@ public abstract class AbstractWizardFormController<T>
      * @throws Exception on error
      */
     protected ModelAndView processCancel(
-        T command, BindException errors,
+        CMD command, BindException errors,
         HttpServletRequest request, HttpServletResponse response)
         throws Exception {
         return super.processCancel(request, response, command, errors);
@@ -204,7 +219,7 @@ public abstract class AbstractWizardFormController<T>
         HttpServletRequest request, HttpServletResponse response, 
         Object command, BindException errors)
         throws Exception {
-        return processFinish((T)command, errors, request, response);
+        return processFinish((CMD)command, errors, request, response);
     }
     
     /**
@@ -218,7 +233,7 @@ public abstract class AbstractWizardFormController<T>
      * @throws Exception on error
      */
     protected abstract ModelAndView processFinish(
-        T command, BindException errors,
+        CMD command, BindException errors,
         HttpServletRequest request, HttpServletResponse response)
         throws Exception;
 
@@ -263,7 +278,7 @@ public abstract class AbstractWizardFormController<T>
         Errors errors, int page) 
         throws Exception {
         Map<String, Object> model = new HashMap<String, Object>();
-        referenceData((T)command, errors, request, model, page);
+        referenceData((CMD)command, errors, request, model, page);
         return (model.size()>0) ? model : null;
     }
     
@@ -280,7 +295,7 @@ public abstract class AbstractWizardFormController<T>
      */
     @SuppressWarnings("unchecked")
     public void referenceData(
-        T command, Errors errors, HttpServletRequest request, Map<String, Object> model, int page)
+        CMD command, Errors errors, HttpServletRequest request, Map<String, Object> model, int page)
         throws Exception {
         Map superModel = super.referenceData(request, command, errors, page);
         if (superModel!=null) {
@@ -295,7 +310,7 @@ public abstract class AbstractWizardFormController<T>
     @SuppressWarnings("unchecked")
     protected final void validatePage(
         Object command, Errors errors, int page, boolean finish) {
-        validatePage(errors, (T)command, page, finish);
+        validatePage(errors, (CMD)command, page, finish);
     }
     
     /**
@@ -307,7 +322,7 @@ public abstract class AbstractWizardFormController<T>
      * @param finish the finish
      */
     protected void validatePage(
-        Errors errors, T command, int page, boolean finish) {
+        Errors errors, CMD command, int page, boolean finish) {
         super.validatePage(command, errors, page, finish);
     }
 
@@ -317,7 +332,7 @@ public abstract class AbstractWizardFormController<T>
     @Override
     @SuppressWarnings("unchecked")
     protected final void validatePage(Object command, Errors errors, int page) {
-        validatePage(errors, (T)command, page);
+        validatePage(errors, (CMD)command, page);
     }
     
     /**
@@ -327,7 +342,7 @@ public abstract class AbstractWizardFormController<T>
      * @param command the command
      * @param page the page
      */
-    protected void validatePage(Errors errors, T command, int page) {
+    protected void validatePage(Errors errors, CMD command, int page) {
         super.validatePage(command, errors, page);
     }
     
@@ -339,7 +354,7 @@ public abstract class AbstractWizardFormController<T>
     protected final Object currentFormObject(
         HttpServletRequest request, Object sessionFormObject) 
         throws Exception {
-        return currentFormObject((T)sessionFormObject, request);
+        return currentFormObject((CMD)sessionFormObject, request);
     }
     
     /**
@@ -351,10 +366,10 @@ public abstract class AbstractWizardFormController<T>
      * @throws Exception on error
      */
     @SuppressWarnings("unchecked")
-    protected T currentFormObject(
-        T sessionFormObject, HttpServletRequest request) 
+    protected CMD currentFormObject(
+        CMD sessionFormObject, HttpServletRequest request) 
         throws Exception {
-        return (T)super.currentFormObject(request, sessionFormObject);
+        return (CMD)super.currentFormObject(request, sessionFormObject);
     }
 
     /**
@@ -374,9 +389,9 @@ public abstract class AbstractWizardFormController<T>
      * @throws Exception on error
      */
     @SuppressWarnings("unchecked")
-    protected T getFormBackingObject(HttpServletRequest request)
+    protected CMD getFormBackingObject(HttpServletRequest request)
         throws Exception {
-        return (T)super.formBackingObject(request);
+        return (CMD)super.formBackingObject(request);
     }
 
     /**
@@ -388,7 +403,7 @@ public abstract class AbstractWizardFormController<T>
         HttpServletRequest request, 
         Object command, BindException errors) 
         throws Exception {
-        onBindOnNewForm((T)command, request, errors);
+        onBindOnNewForm((CMD)command, request, errors);
     }
 
     /**
@@ -400,7 +415,7 @@ public abstract class AbstractWizardFormController<T>
      * @throws Exception on error
      */
     protected void onBindOnNewForm(
-        T command, HttpServletRequest request, BindException errors) 
+        CMD command, HttpServletRequest request, BindException errors) 
         throws Exception {
         super.onBindOnNewForm(request, command, errors);
     }
@@ -413,7 +428,7 @@ public abstract class AbstractWizardFormController<T>
     protected final void onBindOnNewForm(
         HttpServletRequest request, Object command)
         throws Exception {
-        onBindOnNewForm((T)command, request);
+        onBindOnNewForm((CMD)command, request);
     }
 
     /**
@@ -424,7 +439,7 @@ public abstract class AbstractWizardFormController<T>
      * @throws Exception on error
      */
     protected void onBindOnNewForm(
-        T command, HttpServletRequest request)
+        CMD command, HttpServletRequest request)
         throws Exception {
         super.onBindOnNewForm(request, command);
     }
@@ -437,8 +452,8 @@ public abstract class AbstractWizardFormController<T>
     protected ModelAndView showForm(
         HttpServletRequest request, HttpServletResponse response, BindException errors)
         throws Exception {
-        T command = (errors!=null && errors.getTarget()!=null) 
-            ? (T)errors.getTarget() : null;
+        CMD command = (errors!=null && errors.getTarget()!=null) 
+            ? (CMD)errors.getTarget() : null;
         return showForm(request, response, errors, command);
     }
     
@@ -454,7 +469,7 @@ public abstract class AbstractWizardFormController<T>
      */
     protected ModelAndView showForm(
         HttpServletRequest request, HttpServletResponse response, 
-        BindException errors, T command)
+        BindException errors, CMD command)
         throws Exception {
         return super.showForm(request, response, errors);
     }
@@ -467,7 +482,7 @@ public abstract class AbstractWizardFormController<T>
     protected final void onBind(
         HttpServletRequest request, Object command, BindException errors) 
         throws Exception {
-        onBind((T)command, errors, request);
+        onBind((CMD)command, errors, request);
     }
     
     /**
@@ -479,7 +494,7 @@ public abstract class AbstractWizardFormController<T>
      * @throws Exception on error
      */
     protected void onBind(
-        T command, BindException errors, HttpServletRequest request) 
+        CMD command, BindException errors, HttpServletRequest request) 
         throws Exception {
         onBind(request, command);
     }
@@ -491,7 +506,7 @@ public abstract class AbstractWizardFormController<T>
     @SuppressWarnings("unchecked")
     protected final void onBind(HttpServletRequest request, Object command)
         throws Exception {
-        onBind((T)command, request);
+        onBind((CMD)command, request);
     }
     
     /**
@@ -501,7 +516,7 @@ public abstract class AbstractWizardFormController<T>
      * @param request the request
      * @throws Exception on error
      */
-    protected void onBind(T command, HttpServletRequest request)
+    protected void onBind(CMD command, HttpServletRequest request)
         throws Exception {
         // no-op
     }
@@ -514,7 +529,7 @@ public abstract class AbstractWizardFormController<T>
     protected final ServletRequestDataBinder createBinder(
         HttpServletRequest request, Object command) 
         throws Exception {
-        return createBinder((T)command, request);
+        return createBinder((CMD)command, request);
     }
 
     /**
@@ -526,7 +541,7 @@ public abstract class AbstractWizardFormController<T>
      * @throws Exception on error
      */
     protected ServletRequestDataBinder createBinder(
-        T command, HttpServletRequest request) 
+        CMD command, HttpServletRequest request) 
         throws Exception {
         return super.createBinder(request, command);
     }
@@ -538,7 +553,7 @@ public abstract class AbstractWizardFormController<T>
     @SuppressWarnings("unchecked")
     protected final boolean suppressValidation(
         HttpServletRequest request, Object command, BindException errors) {
-        return suppressValidation((T)command, request, errors);
+        return suppressValidation((CMD)command, request, errors);
     }
 
     /**
@@ -550,7 +565,7 @@ public abstract class AbstractWizardFormController<T>
      * @return true or false ?
      */
     protected boolean suppressValidation(
-        T command, HttpServletRequest request, BindException errors) {
+        CMD command, HttpServletRequest request, BindException errors) {
         return super.suppressValidation(request, command, errors);
     }
 
@@ -561,7 +576,7 @@ public abstract class AbstractWizardFormController<T>
     @SuppressWarnings("unchecked")
     protected final boolean suppressValidation(
         HttpServletRequest request, Object command) {
-        return suppressValidation((T)command, request);
+        return suppressValidation((CMD)command, request);
     }
 
     /**
@@ -572,7 +587,7 @@ public abstract class AbstractWizardFormController<T>
      * @return true or false ?
      */
     protected boolean suppressValidation(
-        T command, HttpServletRequest request) {
+        CMD command, HttpServletRequest request) {
         return super.suppressValidation(request, command);
     }
 }
