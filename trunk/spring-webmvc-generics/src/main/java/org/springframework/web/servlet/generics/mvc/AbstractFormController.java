@@ -190,7 +190,7 @@ public abstract class AbstractFormController<T>
         HttpServletRequest request, Object command, Errors errors) 
         throws Exception {
         Map<String, Object> model = new HashMap<String, Object>();
-        referenceData((T)command, errors, request, model);
+        referenceData(request, (T)command, errors, model);
         return (model.size()>0) ? model : null;
     }
 
@@ -206,7 +206,8 @@ public abstract class AbstractFormController<T>
      */
     @SuppressWarnings("unchecked")
     protected void referenceData(
-        T command, Errors errors, HttpServletRequest request, Map<String, Object> model) 
+        HttpServletRequest request, T command, 
+        Errors errors, Map<String, Object> model)
         throws Exception {
         Map superModel = super.referenceData(request, command, errors);
         if (superModel!=null) {
