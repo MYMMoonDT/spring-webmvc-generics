@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.validation.BindException;
 import org.springframework.validation.Errors;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.generics.util.GenericsUtil;
 
 import org.springframework.web.bind.ServletRequestDataBinder;
 
@@ -38,17 +39,25 @@ import org.springframework.web.bind.ServletRequestDataBinder;
  *          {@link #referenceData(Object, Errors, HttpServletRequest, Map)} is void and
  *          is passed a model {@link Map} rather than returning one.
  *      </li>
+ *      <li>The commandClass is automatically determined and therefore doesn't need to be set</li>
  *  </ul>
  * </p>
  * 
  * @see org.springframework.web.servlet.mvc.AbstractFormController
- * @param <T>
+ * @param <CMD>
  */
-public abstract class AbstractFormController<T> 
+public abstract class AbstractFormController<CMD> 
     extends org.springframework.web.servlet.mvc.AbstractFormController {
 
     private String formView;
     private String successView;
+    
+    /**
+     * Creates the AbstractFormController.
+     */
+    public AbstractFormController() {
+        super.setCommandClass(GenericsUtil.getCommandClassFromController(this));
+    }
     
     /**
      * {@inheritDoc}
@@ -58,7 +67,7 @@ public abstract class AbstractFormController<T>
     protected final Object currentFormObject(
         HttpServletRequest request, Object sessionFormObject) 
         throws Exception {
-        return currentFormObject((T)sessionFormObject, request);
+        return currentFormObject((CMD)sessionFormObject, request);
     }
     
     /**
@@ -70,10 +79,10 @@ public abstract class AbstractFormController<T>
      * @throws Exception on error
      */
     @SuppressWarnings("unchecked")
-    protected T currentFormObject(
-        T sessionFormObject, HttpServletRequest request) 
+    protected CMD currentFormObject(
+        CMD sessionFormObject, HttpServletRequest request) 
         throws Exception {
-        return (T)super.currentFormObject(request, sessionFormObject);
+        return (CMD)super.currentFormObject(request, sessionFormObject);
     }
 
     /**
@@ -82,7 +91,7 @@ public abstract class AbstractFormController<T>
     @Override
     protected final Object formBackingObject(HttpServletRequest request)
         throws Exception {
-        return (T)getFormBackingObject(request);
+        return (CMD)getFormBackingObject(request);
     }
 
     /**
@@ -93,9 +102,9 @@ public abstract class AbstractFormController<T>
      * @throws Exception on error
      */
     @SuppressWarnings("unchecked")
-    protected T getFormBackingObject(HttpServletRequest request)
+    protected CMD getFormBackingObject(HttpServletRequest request)
         throws Exception {
-        return (T)super.formBackingObject(request);
+        return (CMD)super.formBackingObject(request);
     }
 
     /**
@@ -107,7 +116,7 @@ public abstract class AbstractFormController<T>
         HttpServletRequest request, 
         Object command, BindException errors) 
         throws Exception {
-        onBindOnNewForm((T)command, request, errors);
+        onBindOnNewForm((CMD)command, request, errors);
     }
 
     /**
@@ -119,7 +128,7 @@ public abstract class AbstractFormController<T>
      * @throws Exception on error
      */
     protected void onBindOnNewForm(
-        T command, HttpServletRequest request, BindException errors) 
+        CMD command, HttpServletRequest request, BindException errors) 
         throws Exception {
         super.onBindOnNewForm(request, command, errors);
     }
@@ -132,7 +141,7 @@ public abstract class AbstractFormController<T>
     protected final void onBindOnNewForm(
         HttpServletRequest request, Object command)
         throws Exception {
-        onBindOnNewForm((T)command, request);
+        onBindOnNewForm((CMD)command, request);
     }
 
     /**
@@ -143,7 +152,7 @@ public abstract class AbstractFormController<T>
      * @throws Exception on error
      */
     protected void onBindOnNewForm(
-        T command, HttpServletRequest request)
+        CMD command, HttpServletRequest request)
         throws Exception {
         super.onBindOnNewForm(request, command);
     }
@@ -160,7 +169,7 @@ public abstract class AbstractFormController<T>
         if (errors.hasErrors()) {
             return showForm(request, response, errors);
         }
-        return processFormSubmission((T)command, errors, request, response);
+        return processFormSubmission((CMD)command, errors, request, response);
     }
 
     /**
@@ -177,7 +186,7 @@ public abstract class AbstractFormController<T>
      * @throws Exception on error
      */
     protected abstract ModelAndView processFormSubmission(
-        T command, BindException errors,
+        CMD command, BindException errors,
         HttpServletRequest request, HttpServletResponse response)
         throws Exception;
 
@@ -190,7 +199,7 @@ public abstract class AbstractFormController<T>
         HttpServletRequest request, Object command, Errors errors) 
         throws Exception {
         Map<String, Object> model = new HashMap<String, Object>();
-        referenceData(request, (T)command, errors, model);
+        referenceData(request, (CMD)command, errors, model);
         return (model.size()>0) ? model : null;
     }
 
@@ -206,7 +215,7 @@ public abstract class AbstractFormController<T>
      */
     @SuppressWarnings("unchecked")
     protected void referenceData(
-        HttpServletRequest request, T command, 
+        HttpServletRequest request, CMD command, 
         Errors errors, Map<String, Object> model)
         throws Exception {
         Map superModel = super.referenceData(request, command, errors);
@@ -223,8 +232,8 @@ public abstract class AbstractFormController<T>
     protected final ModelAndView showForm(
         HttpServletRequest request, HttpServletResponse response, BindException errors)
         throws Exception {
-        T command = (errors!=null && errors.getTarget()!=null) 
-            ? (T)errors.getTarget() : null;
+        CMD command = (errors!=null && errors.getTarget()!=null) 
+            ? (CMD)errors.getTarget() : null;
         return showForm(request, response, errors, command);
     }
     
@@ -244,7 +253,7 @@ public abstract class AbstractFormController<T>
      */
     protected ModelAndView showForm(
         HttpServletRequest request, HttpServletResponse response, 
-        BindException errors, T command)
+        BindException errors, CMD command)
         throws Exception {
         return super.showForm(request, errors, this.formView);
     }
@@ -257,7 +266,7 @@ public abstract class AbstractFormController<T>
     protected final void onBindAndValidate(
         HttpServletRequest request, Object command, BindException errors) 
         throws Exception {
-        onBindAndValidate((T)command, request, errors);
+        onBindAndValidate((CMD)command, request, errors);
     }
     
     /**
@@ -269,7 +278,7 @@ public abstract class AbstractFormController<T>
      * @throws Exception on error
      */
     protected void onBindAndValidate(
-        T command, HttpServletRequest request, BindException errors) 
+        CMD command, HttpServletRequest request, BindException errors) 
         throws Exception {
         // no-op
     }
@@ -282,7 +291,7 @@ public abstract class AbstractFormController<T>
     protected final void onBind(
         HttpServletRequest request, Object command, BindException errors) 
         throws Exception {
-        onBind((T)command, errors, request);
+        onBind((CMD)command, errors, request);
     }
     
     /**
@@ -294,7 +303,7 @@ public abstract class AbstractFormController<T>
      * @throws Exception on error
      */
     protected void onBind(
-        T command, BindException errors, HttpServletRequest request) 
+        CMD command, BindException errors, HttpServletRequest request) 
         throws Exception {
         onBind(request, command);
     }
@@ -306,7 +315,7 @@ public abstract class AbstractFormController<T>
     @SuppressWarnings("unchecked")
     protected final void onBind(HttpServletRequest request, Object command)
         throws Exception {
-        onBind((T)command, request);
+        onBind((CMD)command, request);
     }
     
     /**
@@ -316,7 +325,7 @@ public abstract class AbstractFormController<T>
      * @param request the request
      * @throws Exception on error
      */
-    protected void onBind(T command, HttpServletRequest request)
+    protected void onBind(CMD command, HttpServletRequest request)
         throws Exception {
         // no-op
     }
@@ -329,7 +338,7 @@ public abstract class AbstractFormController<T>
     protected final ServletRequestDataBinder createBinder(
         HttpServletRequest request, Object command) 
         throws Exception {
-        return createBinder((T)command, request);
+        return createBinder((CMD)command, request);
     }
 
     /**
@@ -341,7 +350,7 @@ public abstract class AbstractFormController<T>
      * @throws Exception on error
      */
     protected ServletRequestDataBinder createBinder(
-        T command, HttpServletRequest request) 
+        CMD command, HttpServletRequest request) 
         throws Exception {
         return super.createBinder(request, command);
     }
@@ -353,7 +362,7 @@ public abstract class AbstractFormController<T>
     @SuppressWarnings("unchecked")
     protected final boolean suppressValidation(
         HttpServletRequest request, Object command, BindException errors) {
-        return suppressValidation((T)command, request, errors);
+        return suppressValidation((CMD)command, request, errors);
     }
 
     /**
@@ -365,7 +374,7 @@ public abstract class AbstractFormController<T>
      * @return true or false ?
      */
     protected boolean suppressValidation(
-        T command, HttpServletRequest request, BindException errors) {
+        CMD command, HttpServletRequest request, BindException errors) {
         return super.suppressValidation(request, command, errors);
     }
 
@@ -376,7 +385,7 @@ public abstract class AbstractFormController<T>
     @SuppressWarnings("unchecked")
     protected final boolean suppressValidation(
         HttpServletRequest request, Object command) {
-        return suppressValidation((T)command, request);
+        return suppressValidation((CMD)command, request);
     }
 
     /**
@@ -387,7 +396,7 @@ public abstract class AbstractFormController<T>
      * @return true or false ?
      */
     protected boolean suppressValidation(
-        T command, HttpServletRequest request) {
+        CMD command, HttpServletRequest request) {
         return super.suppressValidation(request, command);
     }
 
