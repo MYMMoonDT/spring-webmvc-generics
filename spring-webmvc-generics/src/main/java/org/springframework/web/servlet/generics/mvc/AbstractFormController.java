@@ -53,10 +53,11 @@ public abstract class AbstractFormController<CMD>
     private String successView;
     
     /**
-     * Creates the AbstractFormController.
+     * Creates the BaseCommandController.
      */
     public AbstractFormController() {
-        super.setCommandClass(GenericsUtil.getCommandClassFromController(this));
+        super.setCommandClass(GenericsUtil.getTypeVariableClassByName(
+            this.getClass(), "CMD", true));
     }
     
     /**
