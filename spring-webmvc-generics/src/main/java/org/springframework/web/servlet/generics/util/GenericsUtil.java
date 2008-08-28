@@ -55,9 +55,12 @@ public abstract class GenericsUtil {
                     if ( (genericClazz==null || genericClazz.equals(typeVars[i].getGenericDeclaration()))
                         && typeVars[i].getName().equals(name)) {
                         
-                        // we're assuming that the index lines up,
-                        // lets hope that remains true :)
-                        return (Class<?>)pType.getActualTypeArguments()[i];
+                        // get the type
+                        Type type = pType.getActualTypeArguments()[i];
+                        
+                        if (type instanceof Class) {
+                            return (Class<?>)type;
+                        }
                     }
                 }
                 
