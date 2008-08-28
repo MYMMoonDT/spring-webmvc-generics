@@ -22,9 +22,9 @@ import org.springframework.web.servlet.generics.util.GenericsUtil;
  *      <li>The commandClass is automatically determined and therefore doesn't need to be set</li>
  *  </ul>
  * </p>
- * @param <CMD>
+ * @param <T>
  */
-public abstract class BaseCommandController<CMD>
+public abstract class BaseCommandController<T>
     extends org.springframework.web.servlet.mvc.BaseCommandController {
 
     private String defaultView;
@@ -34,7 +34,7 @@ public abstract class BaseCommandController<CMD>
      */
     public BaseCommandController() {
         super.setCommandClass(GenericsUtil.getTypeVariableClassByName(
-            this.getClass(), "CMD", true));
+            this.getClass(), BaseCommandController.class, "T", true));
     }
     
     /**
@@ -52,7 +52,7 @@ public abstract class BaseCommandController<CMD>
     protected final void onBindAndValidate(
         HttpServletRequest request, Object command, BindException errors) 
         throws Exception {
-        onBindAndValidate((CMD)command, request, errors);
+        onBindAndValidate((T)command, request, errors);
     }
     
     /**
@@ -64,7 +64,7 @@ public abstract class BaseCommandController<CMD>
      * @throws Exception on error
      */
     protected void onBindAndValidate(
-        CMD command, HttpServletRequest request, BindException errors) 
+        T command, HttpServletRequest request, BindException errors) 
         throws Exception {
         // no-op
     }
@@ -77,7 +77,7 @@ public abstract class BaseCommandController<CMD>
     protected final void onBind(
         HttpServletRequest request, Object command, BindException errors) 
         throws Exception {
-        onBind((CMD)command, errors, request);
+        onBind((T)command, errors, request);
     }
     
     /**
@@ -89,7 +89,7 @@ public abstract class BaseCommandController<CMD>
      * @throws Exception on error
      */
     protected void onBind(
-        CMD command, BindException errors, HttpServletRequest request) 
+        T command, BindException errors, HttpServletRequest request) 
         throws Exception {
         onBind(request, command);
     }
@@ -101,7 +101,7 @@ public abstract class BaseCommandController<CMD>
     @SuppressWarnings("unchecked")
     protected final void onBind(HttpServletRequest request, Object command)
         throws Exception {
-        onBind((CMD)command, request);
+        onBind((T)command, request);
     }
     
     /**
@@ -111,7 +111,7 @@ public abstract class BaseCommandController<CMD>
      * @param request the request
      * @throws Exception on error
      */
-    protected void onBind(CMD command, HttpServletRequest request)
+    protected void onBind(T command, HttpServletRequest request)
         throws Exception {
         // no-op
     }
@@ -124,7 +124,7 @@ public abstract class BaseCommandController<CMD>
     protected final ServletRequestDataBinder createBinder(
         HttpServletRequest request, Object command) 
         throws Exception {
-        return createBinder((CMD)command, request);
+        return createBinder((T)command, request);
     }
 
     /**
@@ -136,7 +136,7 @@ public abstract class BaseCommandController<CMD>
      * @throws Exception on error
      */
     protected ServletRequestDataBinder createBinder(
-        CMD command, HttpServletRequest request) 
+        T command, HttpServletRequest request) 
         throws Exception {
         return super.createBinder(request, command);
     }
@@ -148,7 +148,7 @@ public abstract class BaseCommandController<CMD>
     @SuppressWarnings("unchecked")
     protected final boolean suppressValidation(
         HttpServletRequest request, Object command, BindException errors) {
-        return suppressValidation((CMD)command, request, errors);
+        return suppressValidation((T)command, request, errors);
     }
 
     /**
@@ -160,7 +160,7 @@ public abstract class BaseCommandController<CMD>
      * @return true or false ?
      */
     protected boolean suppressValidation(
-        CMD command, HttpServletRequest request, BindException errors) {
+        T command, HttpServletRequest request, BindException errors) {
         return super.suppressValidation(request, command, errors);
     }
 
@@ -171,7 +171,7 @@ public abstract class BaseCommandController<CMD>
     @SuppressWarnings("unchecked")
     protected final boolean suppressValidation(
         HttpServletRequest request, Object command) {
-        return suppressValidation((CMD)command, request);
+        return suppressValidation((T)command, request);
     }
 
     /**
@@ -182,7 +182,7 @@ public abstract class BaseCommandController<CMD>
      * @return true or false ?
      */
     protected boolean suppressValidation(
-        CMD command, HttpServletRequest request) {
+        T command, HttpServletRequest request) {
         return super.suppressValidation(request, command);
     }
 
