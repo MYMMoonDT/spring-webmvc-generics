@@ -13,10 +13,10 @@ import org.springframework.web.servlet.generics.bind.UrlHttpServletRequestDataBi
  *  see {@link UrlPropertyValues}.
  * </p>
  *
- * @param <CMD>
+ * @param <T>
  */
-public abstract class AbstractUrlCommandController<CMD> 
-    extends AbstractCommandController<CMD> {
+public abstract class AbstractUrlCommandController<T> 
+    extends AbstractCommandController<T> {
 
     private String urlPattern;
     
@@ -25,7 +25,7 @@ public abstract class AbstractUrlCommandController<CMD>
      */
     @Override
     protected ServletRequestDataBinder createBinder(
-        CMD command, HttpServletRequest request) 
+        T command, HttpServletRequest request) 
         throws Exception {
         ServletRequestDataBinder binder = new UrlHttpServletRequestDataBinder(
             command, urlPattern, getCommandName());
