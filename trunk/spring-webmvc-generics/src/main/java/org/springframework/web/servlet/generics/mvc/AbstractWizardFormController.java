@@ -31,10 +31,11 @@ public abstract class AbstractWizardFormController<CMD>
     extends org.springframework.web.servlet.mvc.AbstractWizardFormController {
     
     /**
-     * Creates the AbstractWizardFormController.
+     * Creates the BaseCommandController.
      */
     public AbstractWizardFormController() {
-        super.setCommandClass(GenericsUtil.getCommandClassFromController(this));
+        super.setCommandClass(GenericsUtil.getTypeVariableClassByName(
+            this.getClass(), "CMD", true));
     }
 
     /**

@@ -1,38 +1,50 @@
 package org.springframework.web.servlet.generics.util;
 
+import java.lang.reflect.ParameterizedType;
+import java.lang.reflect.Type;
 import java.lang.reflect.TypeVariable;
 
-import org.springframework.web.servlet.mvc.Controller;
-
 /**
- * Utilities for working with generics in the spring framework.
+ * Utilities for working with generic types.
  */
 public abstract class GenericsUtil {
     
     /**
-     * The type variable name for command classes.
-     * Default is "CMD" and {@link #getCommandClassFromController(Controller)}
-     * only works with controllers whos command class
-     * type variable has this name.
+     * Returns the class defined for the type variable
+     * of the given name. 
+     * @param clazz the class
+     * @param name the name of the type variable
+     * @param recursive whether or not to recurse up the
+     * object's inheritance hierarchy.
+     * @return the class
      */
-    public static final String COMMANDCLASS_TYPEVAR_NAME = "CMD";
-    
-    /**
-     * Returns the command class for the given controller.
-     * @param controller the controller
-     * @return the command class
-     */
-    public static final Class<?> getCommandClassFromController(Controller controller) {
+    public static final Class<?> getTypeVariableClassByName(
+        Class<?> clazz, String name, Boolean recursive) {
         
-        // get the type parameters
-        for (TypeVariable<?> typeVar : controller.getClass().getTypeParameters()) {
-            if (typeVar.getName().equals(COMMANDCLASS_TYPEVAR_NAME)) {
-                return typeVar.getClass();
+        // we hit the end of the line here :)
+        if (clazz==null || clazz.equals(Object.class)) {
+            return null;
+        }
+        
+        // get superclass type
+        Type type = clazz.getGenericSuperclass();
+        
+        // check to see if it is a ParameterizedType
+        if (type instanceof ParameterizedType) {
+            ParameterizedType pType = (ParameterizedType)type;
+            
+            // get super class type variables
+            TypeVariable<?>[] typeVars = clazz.getSuperclass().getTypeParameters();
+            for (int i=0; i<typeVars.length; i++) {
+                if (typeVars[i].getName().equals(name)) {
+                    return (Class<?>)pType.getActualTypeArguments()[i];
+                }
             }
         }
         
         // none found
-        return null;
+        return (recursive) 
+            ? getTypeVariableClassByName(clazz.getSuperclass(), name, recursive) : null;
     }
     
 }

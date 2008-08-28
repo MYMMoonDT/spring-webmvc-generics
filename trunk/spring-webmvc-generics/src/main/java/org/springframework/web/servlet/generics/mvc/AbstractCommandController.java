@@ -42,10 +42,11 @@ public abstract class AbstractCommandController<CMD>
     private String errorView;
     
     /**
-     * Creates the AbstractCommandController.
+     * Creates the BaseCommandController.
      */
     public AbstractCommandController() {
-        super.setCommandClass(GenericsUtil.getCommandClassFromController(this));
+        super.setCommandClass(GenericsUtil.getTypeVariableClassByName(
+            this.getClass(), "CMD", true));
     }
     
     /**

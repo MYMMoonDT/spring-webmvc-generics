@@ -33,7 +33,8 @@ public abstract class BaseCommandController<CMD>
      * Creates the BaseCommandController.
      */
     public BaseCommandController() {
-        super.setCommandClass(GenericsUtil.getCommandClassFromController(this));
+        super.setCommandClass(GenericsUtil.getTypeVariableClassByName(
+            this.getClass(), "CMD", true));
     }
     
     /**
