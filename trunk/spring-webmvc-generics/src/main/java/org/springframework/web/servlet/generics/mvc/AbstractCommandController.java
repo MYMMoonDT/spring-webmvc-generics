@@ -45,8 +45,10 @@ public abstract class AbstractCommandController<T>
      * Creates the BaseCommandController.
      */
     public AbstractCommandController() {
-        super.setCommandClass(GenericsUtil.getTypeVariableClassByName(
-            this.getClass(), AbstractCommandController.class, "T", true));
+        if (getCommandClass()==null) {
+            super.setCommandClass(GenericsUtil.getTypeVariableClassByName(
+                this.getClass(), AbstractCommandController.class, "T", true));
+        }
     }
     
     /**
