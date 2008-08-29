@@ -117,7 +117,7 @@ public abstract class AbstractFormController<T>
         HttpServletRequest request, 
         Object command, BindException errors) 
         throws Exception {
-        onBindOnNewForm((T)command, request, errors);
+        onBindOnNewForm((T)command, errors, request);
     }
 
     /**
@@ -129,7 +129,7 @@ public abstract class AbstractFormController<T>
      * @throws Exception on error
      */
     protected void onBindOnNewForm(
-        T command, HttpServletRequest request, BindException errors) 
+        T command, BindException errors, HttpServletRequest request) 
         throws Exception {
         super.onBindOnNewForm(request, command, errors);
     }
