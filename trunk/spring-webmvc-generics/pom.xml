@@ -7,7 +7,7 @@
 		+-->
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.springframework.web.servlet.generics</groupId>
-	<version>1.0-SNAPSHOT</version>
+	<version>0.2-SNAPSHOT</version>
 	<artifactId>spring-webmvc-generics</artifactId>
 	<name>Spring Web MVC Generics</name>
 	<packaging>jar</packaging>
@@ -240,6 +240,11 @@
 			<id>jwormy</id>
 			<name>Jeremy Arnold</name>
 		</developer>
+		<developer>
+			<email>momokatte@gmail.com</email>
+			<id>momokatte</id>
+			<name>Michael O'Rourke</name>
+		</developer>
 	</developers>
 
 	<!--
@@ -335,24 +340,24 @@
 	<dependencies>
 
 		<!--
-			| Unit testing
-			+-->
+		 | Unit testing
+		 +-->
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
-			<version>4.3.1</version>
+			<version>4.4</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.jmock</groupId>
 			<artifactId>jmock-junit4</artifactId>
-			<version>2.2.0</version>
+			<version>2.5.1</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>org.jmock</groupId>
 			<artifactId>jmock</artifactId>
-			<version>2.2.0</version>
+			<version>2.5.1</version>
 			<scope>test</scope>
 		</dependency>
 		
@@ -371,12 +376,12 @@
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-core</artifactId>
-			<version>2.5.4</version>
+			<version>2.5.5</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-webmvc</artifactId>
-			<version>2.5.4</version>
+			<version>2.5.5</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
