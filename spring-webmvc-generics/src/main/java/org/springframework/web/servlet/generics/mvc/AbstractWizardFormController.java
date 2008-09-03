@@ -265,7 +265,7 @@ public abstract class AbstractWizardFormController<T>
         throws Exception {
         Map superModel = super.referenceData(request, page);
         if (superModel!=null) {
-            model.putAll(model);
+            model.putAll(superModel);
         }
     }
 
@@ -300,7 +300,7 @@ public abstract class AbstractWizardFormController<T>
         throws Exception {
         Map superModel = super.referenceData(request, command, errors, page);
         if (superModel!=null) {
-            model.putAll(model);
+            model.putAll(superModel);
         }
     }
 
