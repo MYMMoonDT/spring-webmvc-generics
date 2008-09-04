@@ -57,8 +57,7 @@ import org.springframework.web.bind.ServletRequestParameterPropertyValues;
  *      &lt;!-- redirector --&gt;
  *      &lt;bean id="personViewController" 
  *          class="com.example.controller.PersonViewController"&gt;
- *          &lt;property name="urlPattern"      value="/notused/id/name" /&gt;
- *          &lt;property name="commandClass"    value="com.example.form.PersonCommand" /&gt;
+ *          &lt;property name="urlPattern" value="/notused/id/name" /&gt;
  *      &lt;/bean&gt;
  *      </code>
  *  </pre>
