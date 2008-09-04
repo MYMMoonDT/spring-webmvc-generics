@@ -7,7 +7,7 @@
 		+-->
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>org.springframework.web.servlet.generics</groupId>
-	<version>0.3-SNAPSHOT</version>
+	<version>0.4-SNAPSHOT</version>
 	<artifactId>spring-webmvc-generics</artifactId>
 	<name>Spring Web MVC Generics</name>
 	<packaging>jar</packaging>
