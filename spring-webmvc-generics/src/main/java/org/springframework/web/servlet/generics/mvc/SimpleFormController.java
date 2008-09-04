@@ -359,7 +359,7 @@ public abstract class SimpleFormController<T>
     @SuppressWarnings("unchecked")
     protected final void doSubmitAction(Object command) 
         throws Exception {
-        doSubmitAction((T)command);
+        doSubmitActionGeneric((T)command);
     }
 
     /**
