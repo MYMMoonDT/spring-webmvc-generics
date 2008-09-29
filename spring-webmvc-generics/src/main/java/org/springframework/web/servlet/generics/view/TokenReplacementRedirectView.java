@@ -39,9 +39,18 @@ public class TokenReplacementRedirectView
         StringBuilder buff = new StringBuilder();
         
         // append context path
-        if (getUrl().startsWith("/") && this.contextRelative) {
+        if (this.contextRelative 
+            && getUrl().startsWith("/") 
+            && !getUrl().startsWith(request.getContextPath())) {
             buff.append(request.getContextPath());
+            
+        // remove context path
+        } else if (!this.contextRelative
+            && getUrl().startsWith(request.getContextPath())) {
+            buff.replace(0, request.getContextPath().length(), "");
         }
+        
+        // append the URL
         buff.append(getUrl());
         
         // the url we're redirecting to
