@@ -36,7 +36,7 @@ public abstract class AbstractGenericValidator<T>
      */
     @SuppressWarnings("unchecked")
     public final boolean supports(Class clazz) {
-        return clazz.isAssignableFrom(this.clazz);
+        return this.clazz.isAssignableFrom(clazz);
     }
     
     /**
