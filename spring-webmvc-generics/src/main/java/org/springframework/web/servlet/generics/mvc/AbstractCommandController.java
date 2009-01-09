@@ -1,6 +1,5 @@
 package org.springframework.web.servlet.generics.mvc;
 
-import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -63,7 +62,7 @@ public abstract class AbstractCommandController<T>
         HttpServletRequest request, HttpServletResponse response, 
         Object command, BindException errors)
         throws Exception {
-        Map<String, Object> model = new HashMap<String, Object>();
+        Map<String, Object> model = errors.getModel();
         model.put(getCommandName(), command);
         return (errors.hasErrors())
             ? handleError((T)command, errors, request, response, model)
@@ -90,7 +89,6 @@ public abstract class AbstractCommandController<T>
         HttpServletRequest request, HttpServletResponse response, 
         Map<String, Object> model)
         throws Exception {
-        model.putAll(errors.getModel());
         return new ModelAndView(this.errorView, model);
     }
     
