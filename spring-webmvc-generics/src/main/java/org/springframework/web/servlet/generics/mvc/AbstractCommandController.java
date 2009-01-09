@@ -83,7 +83,6 @@ public abstract class AbstractCommandController<T>
      * @return the model and view
      * @throws Exception on error.
      */
-    @SuppressWarnings("unchecked")
     protected ModelAndView handleError(
         T command, BindException errors,
         HttpServletRequest request, HttpServletResponse response, 
