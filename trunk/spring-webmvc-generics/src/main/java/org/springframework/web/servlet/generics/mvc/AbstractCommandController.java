@@ -23,10 +23,13 @@ import org.springframework.web.servlet.generics.util.GenericsUtil;
  *  <ul>
  *      <li>defaultView configuration parameter</li>
  *      <li>errorView configuration parameter</li>
+ *      <li>command object is put into model automatically</li>
+ *      <li>handle methods have a model passed into them</li>
  *      <li>
- *          {@link #handle(Object, BindException, HttpServletRequest, HttpServletResponse)}
+ *          {@link #handle(Object, BindException, HttpServletRequest, HttpServletResponse, Map)}
  *          is only called when there are no errors (ie: validation).
- *          In the case of errors {@link #handleError(Object, BindException, HttpServletRequest, HttpServletResponse)}
+ *          In the case of errors 
+ *          {@link #handleError(Object, BindException, HttpServletRequest, HttpServletResponse, Map)}
  *          is called.
  *      </li>
  *      <li>The commandClass is automatically determined and therefore doesn't need to be set</li>
@@ -60,9 +63,11 @@ public abstract class AbstractCommandController<T>
         HttpServletRequest request, HttpServletResponse response, 
         Object command, BindException errors)
         throws Exception {
+        Map<String, Object> model = new HashMap<String, Object>();
+        model.put(getCommandName(), command);
         return (errors.hasErrors())
-            ? handleError((T)command, errors, request, response)
-            : handle((T)command, errors, request, response);
+            ? handleError((T)command, errors, request, response, model)
+            : handle((T)command, errors, request, response, model);
     }
 
     /**
@@ -75,16 +80,16 @@ public abstract class AbstractCommandController<T>
      * @param errors the errors
      * @param request the request
      * @param response the response
+     * @param model a model
      * @return the model and view
      * @throws Exception on error.
      */
     @SuppressWarnings("unchecked")
     protected ModelAndView handleError(
         T command, BindException errors,
-        HttpServletRequest request, HttpServletResponse response)
+        HttpServletRequest request, HttpServletResponse response, 
+        Map<String, Object> model)
         throws Exception {
-        Map<String, Object> model = new HashMap<String, Object>();
-        model.put(getCommandName(), command);
         model.putAll(errors.getModel());
         return new ModelAndView(this.errorView, model);
     }
@@ -99,12 +104,14 @@ public abstract class AbstractCommandController<T>
      * @param errors the errors
      * @param request the request
      * @param response the response
+     * @param model a model
      * @return the model and view
      * @throws Exception on error.
      */
     protected abstract ModelAndView handle(
         T command, BindException errors,
-        HttpServletRequest request, HttpServletResponse response)
+        HttpServletRequest request, HttpServletResponse response,
+        Map<String, Object> model)
         throws Exception;
     
     /**
