@@ -60,6 +60,8 @@ public abstract class GenericsUtil {
                         
                         if (type instanceof Class) {
                             return (Class<?>)type;
+                        } else if (type instanceof ParameterizedType) {
+                            return (Class<?>)((ParameterizedType) type).getRawType();
                         }
                     }
                 }
