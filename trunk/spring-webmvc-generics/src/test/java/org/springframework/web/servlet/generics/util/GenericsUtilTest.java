@@ -2,6 +2,8 @@ package org.springframework.web.servlet.generics.util;
 
 import static org.junit.Assert.*;
 
+import java.util.List;
+
 import org.junit.Test;
 
 public class GenericsUtilTest {
@@ -33,6 +35,9 @@ public class GenericsUtilTest {
         assertEquals(String.class, testTVCBN(MindFuck.class, TestGenericAbstractClass.class, "D", true));
         assertEquals(Integer.class, testTVCBN(MindFuck.class, TestGenericInterface.class, "A", true));
         
+
+        assertEquals(List.class, testTVCBN(Balls.class, TestGenericInterface.class, "A", true));
+        assertEquals(List.class, testTVCBN(Balls.class, "A", true));
     }
 
     private static Class<?> testTVCBN(Class<?> clazz, Class<?> gclazz, String name, Boolean recursive) {
@@ -97,6 +102,10 @@ public class GenericsUtilTest {
     }
     
     class SuperMindFuck extends MindFuck {
+        
+    }
+    
+    class Balls implements TestGenericInterface<List<String>> {
         
     }
     
