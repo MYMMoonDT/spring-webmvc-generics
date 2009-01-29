@@ -14,8 +14,8 @@
 	<url>http://code.google.com/p/spring-webmvc-generics</url>
 
 	<!--
-		| Profiles.
-		+-->
+	 | Profiles.
+	 +-->
 	<profiles>
 
 		<!-- ignore-exhaustive-checks -->
