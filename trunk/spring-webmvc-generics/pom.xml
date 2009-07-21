@@ -36,7 +36,7 @@
 					<!-- checkstyle report plugin -->
 					<plugin>
 						<groupId>org.apache.maven.plugins</groupId>
-	                    <artifactId>maven-checkstyle-plugin</artifactId>
+	                    			<artifactId>maven-checkstyle-plugin</artifactId>
 						<configuration>
 							<configLocation>
 								src/main/resources/checkstyle/spring-webmvc-generics_checks.xml
@@ -100,8 +100,8 @@
 						<groupId>org.apache.maven.plugins</groupId>
 						<artifactId>maven-compiler-plugin</artifactId>
 						<configuration>
-							<source>1.6</source>
-							<target>1.6</target>
+							<source>1.5</source>
+							<target>1.5</target>
 						</configuration>
 					</plugin>
 					
@@ -193,42 +193,8 @@
 	</profiles>
 
 	<!--
-	 | continuous integration configuration
+	 | Developers on the project
 	 +-->
-	<ciManagement>
-		<system>continuum</system>
-		<url>http://bonecrusher.corp.nesting.com/continuum</url>
-		<notifiers>
-			<notifier>
-				<type>mail</type>
-				<configuration>
-					<address>build@nesting.com</address>
-					<address>build@nesting.com</address>
-				</configuration>
-			</notifier>
-		</notifiers>
-	</ciManagement>
-
-	<!--
-	 | distribution (deployment) configuration
-	 +-->
-	<distributionManagement>
-		<repository>
-			<id>bonecrusher-ssh-repository</id>
-			<url>scpexe://bonecrusher.corp.nesting.com/home/maven2/htdocs/maven2-opensource</url>
-			<uniqueVersion>false</uniqueVersion>
-			<layout>default</layout>
-		</repository>
-		<site>
-			<id>site-server</id>
-			<name>Nesting site Server</name>
-			<url>scpexe://bonecrusher.corp.nesting.com/home/maven2/htdocs/maven-site/opensource/spring-webmvc-generics</url>
-		</site>
-	</distributionManagement>
-
-	<!--
-		| Developers on the project
-		+-->
 	<developers>
 		<developer>
 			<email>brian.dilley@gmail.com</email>
@@ -248,8 +214,8 @@
 	</developers>
 
 	<!--
-		| scm configuration
-		+-->
+	 | scm configuration
+	 +-->
 	<scm>
 		<connection>scm:svn:http://spring-webmvc-generics.googlecode.com/svn/trunk/spring-webmvc-generics</connection>
 		<developerConnection>scm:svn:https://spring-webmvc-generics.googlecode.com/svn/trunk/spring-webmvc-generics</developerConnection>
@@ -257,9 +223,36 @@
 	</scm>
 
 	<!--
-		| build configuration
-		+-->
+	 | distribution (deployment) configuration
+	 +-->
+	<distributionManagement>
+		<repository>
+			<id>spring-webmvc-generics-webdav-maven-repo</id>
+			<name>spring-webmvc-generics maven repository</name>
+			<url>dav:https://spring-webmvc-generics.googlecode.com/svn/maven/repo/</url>
+			<uniqueVersion>false</uniqueVersion>
+			<layout>default</layout>
+		</repository>
+		<!-- <site>
+			<id>spring-webmvc-generics-webdav-maven-repo</id>
+			<name>spring-webmvc-generics site server</name>
+			<url>dav:https://spring-webmvc-generics.googlecode.com/svn/maven/site/</url>
+		</site> -->
+	</distributionManagement>
+
+	<!--
+	 | build configuration
+	 +-->
 	<build>
+
+		<!-- build extensions -->
+		<extensions>
+			<extension>
+				<groupId>org.apache.maven.wagon</groupId>
+				<artifactId>wagon-webdav</artifactId>
+				<version>1.0-beta-2</version>
+			</extension>
+		</extensions>
 
 		<!-- resources directories -->
 		<resources>
@@ -276,13 +269,13 @@
 		<!-- build plugins -->
 		<plugins>
 
-			<!-- java 1.6 compiler by default -->
+			<!-- java 1.5 compiler by default -->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
 				<configuration>
-					<source>1.6</source>
-					<target>1.6</target>
+					<source>1.5</source>
+					<target>1.5</target>
 				</configuration>
 			</plugin>
 
@@ -290,7 +283,7 @@
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-eclipse-plugin</artifactId>
-				<version>2.5</version>
+				<version>LATEST</version>
 				<configuration>
 					<downloadSources>true</downloadSources>
 					<downloadJavadocs>true</downloadJavadocs>
@@ -317,16 +310,6 @@
 							</content>
 						</file>
 					</additionalConfig>
-				</configuration>
-			</plugin>
-
-			<!-- scm plugin configuration -->
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-scm-plugin</artifactId>
-				<version>1.0-beta-4</version>
-				<configuration>
-					<connectionType>connection</connectionType>
 				</configuration>
 			</plugin>
 
@@ -371,8 +354,8 @@
 		</dependency>
 
 		<!-- 
-			| Spring dependencies
-			+-->
+		 | Spring dependencies
+		 +-->
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-core</artifactId>
