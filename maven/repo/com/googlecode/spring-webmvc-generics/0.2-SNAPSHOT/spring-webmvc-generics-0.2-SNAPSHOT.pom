@@ -1,0 +1,378 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+
+	<!-- 
+		| Basic project information
+		+-->
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>com.googlecode</groupId>
+	<version>0.2-SNAPSHOT</version>
+	<artifactId>spring-webmvc-generics</artifactId>
+	<name>Spring Web MVC Generics</name>
+	<packaging>jar</packaging>
+	<url>http://code.google.com/p/spring-webmvc-generics</url>
+
+	<!--
+	 | Profiles.
+	 +-->
+	<profiles>
+
+		<!-- ignore-exhaustive-checks -->
+		<profile>
+			<id>exhaustive-checks</id>
+			<activation>
+				<activeByDefault>false</activeByDefault>
+				<property>
+					<name>enable-exhaustive-checks</name>
+					<value>true</value>
+				</property>
+			</activation>
+
+			<!-- reporting plugins -->
+			<reporting>
+				<plugins>
+
+					<!-- checkstyle report plugin -->
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+	                    			<artifactId>maven-checkstyle-plugin</artifactId>
+						<configuration>
+							<configLocation>
+								src/main/resources/checkstyle/spring-webmvc-generics_checks.xml
+							</configLocation>
+						</configuration>
+					</plugin>
+
+					<!-- javadoc plugin -->
+					<plugin>
+						<artifactId>maven-javadoc-plugin</artifactId>
+					</plugin>
+
+					<!-- jxr plugin -->
+					<plugin>
+						<groupId>org.codehaus.mojo</groupId>
+						<artifactId>jxr-maven-plugin</artifactId>
+					</plugin>
+
+					<!-- changelog plugin based on SCM -->
+					<plugin>
+						<groupId>org.codehaus.mojo</groupId>
+						<artifactId>changelog-maven-plugin</artifactId>
+					</plugin>
+
+					<!-- taglist (like TODO) plugin -->
+					<plugin>
+						<groupId>org.codehaus.mojo</groupId>
+						<artifactId>taglist-maven-plugin</artifactId>
+					</plugin>
+
+					<!-- surefire (JUnit) test report -->
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>
+							maven-surefire-report-plugin
+						</artifactId>
+						<configuration>
+							<showSuccess>true</showSuccess>
+							<showFailure>true</showFailure>
+						</configuration>
+					</plugin>
+
+					<!-- code coverage reports -->
+					<plugin>
+						<groupId>org.codehaus.mojo</groupId>
+						<artifactId>cobertura-maven-plugin</artifactId>
+						<version>2.2</version>
+					</plugin>
+
+				</plugins>
+			</reporting>
+
+			<!-- build related plugins -->
+			<build>
+
+				<!-- build plugins -->
+				<plugins>
+
+					<!-- compiler plugin -->
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-compiler-plugin</artifactId>
+						<configuration>
+							<source>1.5</source>
+							<target>1.5</target>
+						</configuration>
+					</plugin>
+					
+					<!-- deploys the sources too -->
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-source-plugin</artifactId>
+						<executions>
+							<execution>
+								<goals>
+									<goal>jar</goal>
+									<goal>test-jar</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+					
+					<!-- deploys the javadocs too -->
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-javadoc-plugin</artifactId>
+						<executions>
+							<execution>
+								<id>attach-javadocs</id>
+								<goals>
+									<goal>jar</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+
+					<!-- checkstyle build plugin -->
+					<plugin>
+						<groupId>org.apache.maven.plugins</groupId>
+						<artifactId>maven-checkstyle-plugin</artifactId>
+						<executions>
+							<execution>
+								<goals>
+									<goal>check</goal>
+								</goals>
+							</execution>
+						</executions>
+						<configuration>
+							<configLocation>
+								src/main/resources/checkstyle/spring-webmvc-generics_checks.xml
+							</configLocation>
+							<failOnViolation>true</failOnViolation>
+						</configuration>
+					</plugin>
+
+					<!-- code coverage -->
+					<plugin>
+						<groupId>org.codehaus.mojo</groupId>
+						<artifactId>cobertura-maven-plugin</artifactId>
+						<version>2.2</version>
+						<configuration>
+							<check>
+								<haltOnFailure>false</haltOnFailure>
+
+								<lineRate>100</lineRate>
+								<totalLineRate>100</totalLineRate>
+								<packageLineRate>100</packageLineRate>
+
+								<!--<branchRate>90</branchRate>-->
+								<totalBranchRate>86</totalBranchRate>
+								<!--<packageBranchRate>90</packageBranchRate>-->
+
+								<regexes></regexes>
+							</check>
+							<instrumentation>
+								<ignores />
+								<excludes>
+									<exclude>**/*Test.class</exclude>
+								</excludes>
+							</instrumentation>
+						</configuration>
+						<executions>
+							<execution>
+								<goals>
+									<goal>clean</goal>
+									<goal>check</goal>
+								</goals>
+							</execution>
+						</executions>
+					</plugin>
+				</plugins>
+			</build>
+		</profile>
+	</profiles>
+
+	<!--
+	 | Developers on the project
+	 +-->
+	<developers>
+		<developer>
+			<email>brian.dilley@gmail.com</email>
+			<id>brian.dilley</id>
+			<name>Brian Dilley</name>
+		</developer>
+		<developer>
+			<email>jwormy@gmail.com</email>
+			<id>jwormy</id>
+			<name>Jeremy Arnold</name>
+		</developer>
+		<developer>
+			<email>momokatte@gmail.com</email>
+			<id>momokatte</id>
+			<name>Michael O'Rourke</name>
+		</developer>
+	</developers>
+
+	<!--
+	 | scm configuration
+	 +-->
+	<scm>
+		<connection>scm:svn:http://spring-webmvc-generics.googlecode.com/svn/trunk/spring-webmvc-generics</connection>
+		<developerConnection>scm:svn:https://spring-webmvc-generics.googlecode.com/svn/trunk/spring-webmvc-generics</developerConnection>
+		<url>http://spring-webmvc-generics.googlecode.com/svn/trunk/spring-webmvc-generics</url>
+	</scm>
+
+	<!--
+	 | distribution (deployment) configuration
+	 +-->
+	<distributionManagement>
+		<repository>
+			<id>spring-webmvc-generics-webdav-maven-repo</id>
+			<name>spring-webmvc-generics maven repository</name>
+			<url>dav:https://spring-webmvc-generics.googlecode.com/svn/maven/repo/</url>
+			<uniqueVersion>false</uniqueVersion>
+			<layout>default</layout>
+		</repository>
+		<!-- <site>
+			<id>spring-webmvc-generics-webdav-maven-repo</id>
+			<name>spring-webmvc-generics site server</name>
+			<url>dav:https://spring-webmvc-generics.googlecode.com/svn/maven/site/</url>
+		</site> -->
+	</distributionManagement>
+
+	<!--
+	 | build configuration
+	 +-->
+	<build>
+
+		<!-- build extensions -->
+		<extensions>
+			<extension>
+				<groupId>org.apache.maven.wagon</groupId>
+				<artifactId>wagon-webdav</artifactId>
+				<version>1.0-beta-2</version>
+			</extension>
+		</extensions>
+
+		<!-- resources directories -->
+		<resources>
+			<resource>
+				<directory>src/main/resources</directory>
+			</resource>
+		</resources>
+		<testResources>
+			<testResource>
+				<directory>src/test/resources</directory>
+			</testResource>
+		</testResources>
+
+		<!-- build plugins -->
+		<plugins>
+
+			<!-- java 1.5 compiler by default -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<source>1.5</source>
+					<target>1.5</target>
+				</configuration>
+			</plugin>
+
+			<!-- eclipse plugin -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-eclipse-plugin</artifactId>
+				<version>LATEST</version>
+				<configuration>
+					<downloadSources>true</downloadSources>
+					<downloadJavadocs>true</downloadJavadocs>
+					<additionalBuildcommands>
+						<buildcommand>
+							com.atlassw.tools.eclipse.checkstyle.CheckstyleBuilder
+						</buildcommand>
+					</additionalBuildcommands>
+					<additionalConfig>
+						<file>
+							<name>.checkstyle</name>
+							<content>
+								<![CDATA[
+									<?xml version="1.0" encoding="UTF-8"?>
+									<fileset-config file-format-version="1.2.0" simple-config="false">
+									    <fileset name="sources" enabled="true" check-config-name="Spring WebMVC Generics Exhaustive Checks" local="false">
+									        <file-match-pattern match-pattern="target[\\/]*" include-pattern="false" />
+									        <file-match-pattern match-pattern="src[\\/]main[\\/]java[\\/]*" include-pattern="true" />
+									        <file-match-pattern match-pattern="src[\\/]test[\\/]java[\\/]*" include-pattern="false" />
+									    </fileset>
+									    <filter name="NonSrcDirs" enabled="true" />
+									</fileset-config>
+								]]>
+							</content>
+						</file>
+					</additionalConfig>
+				</configuration>
+			</plugin>
+
+		</plugins>
+
+	</build>
+
+	<!-- 
+		| library/application dependencies
+		+-->
+	<dependencies>
+
+		<!--
+		 | Unit testing
+		 +-->
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.4</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.jmock</groupId>
+			<artifactId>jmock-junit4</artifactId>
+			<version>2.5.1</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.jmock</groupId>
+			<artifactId>jmock</artifactId>
+			<version>2.5.1</version>
+			<scope>test</scope>
+		</dependency>
+		
+		<!--
+		 | Servlet/Web dependencies
+		 +-->
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>servlet-api</artifactId>
+			<version>2.5</version>
+		</dependency>
+
+		<!-- 
+		 | Spring dependencies
+		 +-->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-core</artifactId>
+			<version>2.5.6</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-webmvc</artifactId>
+			<version>2.5.6</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-mock</artifactId>
+			<version>2.0.8</version>
+			<scope>test</scope>
+		</dependency>
+
+	</dependencies>
+
+</project>
