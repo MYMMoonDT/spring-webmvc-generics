@@ -47,7 +47,11 @@ public abstract class AbstractGenericValidator<T>
      */
     @SuppressWarnings("unchecked")
     public final void validate(Object target, Errors errors) {
-        doValidate((T)target, errors);
+    	try {
+    		doValidate((T)target, errors);
+    	} catch(Exception e) {
+    		throw new RuntimeException(e);
+    	}
     }
     
     /**
@@ -55,6 +59,7 @@ public abstract class AbstractGenericValidator<T>
      * @param target the object to validate
      * @param errors the errors
      */
-    protected abstract void doValidate(T target, Errors errors);
+    protected abstract void doValidate(T target, Errors errors)
+    	throws Exception;
 
 }
