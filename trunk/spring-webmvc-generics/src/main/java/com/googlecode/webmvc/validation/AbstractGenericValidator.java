@@ -58,6 +58,7 @@ public abstract class AbstractGenericValidator<T>
      * Generic version of {@link Validator#validate(Object, Errors)}.
      * @param target the object to validate
      * @param errors the errors
+     * @throws Exception on error
      */
     protected abstract void doValidate(T target, Errors errors)
     	throws Exception;
