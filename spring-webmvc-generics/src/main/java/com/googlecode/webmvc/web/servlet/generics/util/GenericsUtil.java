@@ -52,15 +52,15 @@ public abstract class GenericsUtil {
                 // get super class type variables
                 TypeVariable<?>[] typeVars = getGenericTypeParameters(clazz, pType.getRawType());
                 for (int i=0; i<typeVars.length; i++) {
-                    if ( (genericClazz==null || genericClazz.equals(typeVars[i].getGenericDeclaration()))
+                    if ((genericClazz==null || genericClazz.equals(typeVars[i].getGenericDeclaration()))
                         && typeVars[i].getName().equals(name)) {
                         
                         // get the type
                         Type type = pType.getActualTypeArguments()[i];
                         
-                        if (type instanceof Class) {
+                        if (Class.class.isAssignableFrom(type.getClass())) {
                             return (Class<?>)type;
-                        } else if (type instanceof ParameterizedType) {
+                        } else if (ParameterizedType.class.isAssignableFrom(type.getClass())) {
                             return (Class<?>)((ParameterizedType) type).getRawType();
                         }
                     }
